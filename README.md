@@ -1,4 +1,4 @@
-# IoT-based Smart Car Parking System using NodeMCU and Firebase Realtime Database
+# IoT-based Smart Car Parking System using NodeMCU and Firebase RTDB
 ![IMG_20241227_182641](https://github.com/user-attachments/assets/d4f6c2f4-42c3-49ee-907f-dff8a6a5a74d)
 ### Brief
 This project is a Smart Car Parking System that monitors parking space availability in real-time using ESP8266, IR sensors, and Firebase Realtime Database. The system updates a web dashboard to display the status of parking slots and can be scaled for larger parking areas.
