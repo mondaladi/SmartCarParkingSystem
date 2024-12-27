@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Car Parking System</title>
+    <style>
+        /* Basic styling for the body to center the content vertically and horizontally */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f8ff;  /* Light blue background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;  /* Full viewport height */
+            margin: 0;
+        }
+        
+        /* Styling for the container box that holds the parking info */
+        .container {
+            text-align: center;
+            background-color: #fff;  /* White background for the content box */
+            padding: 30px;
+            border-radius: 10px;  /* Rounded corners */
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);  /* Shadow for elevation */
+            max-width: 400px;  /* Responsive max width */
+            width: 100%;  /* Full width within max-width */
+        }
+        
+        /* Header styling */
+        h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Sub-header styling */
+        h2 {
+            font-size: 24px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        
+        /* Flex column layout for parking info elements */
+        .parking-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;  /* Spacing between parking slots */
+            margin-top: 20px;
+        }
+        
+        /* Styling for each parking slot */
+        .parking-info div {
+            font-size: 20px;
+            padding: 10px 0;
+            width: 100%;
+            background-color: #f8f9fa;  /* Light grey background */
+            border-radius: 8px;  /* Rounded corners for slot display */
+            transition: background-color 0.3s ease;  /* Smooth transition effect */
+        }
+        
+        /* Available space - green text */
+        .space {
+            color: green;
+        }
+        
+        /* Occupied space - red text */
+        .space.occupied {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <!-- Main content box -->
+    <div class="container">
+        <h1>Smart Car Parking System</h1>
+        <h2 id="total-spaces">Loading...</h2>  <!-- Placeholder for total spaces -->
+        <div class="parking-info">
+            <!-- Placeholders for individual parking spaces -->
+            <div id="left-space">Left: Loading...</div>
+            <div id="center1-space">Center 1: Loading...</div>
+            <div id="center2-space">Center 2: Loading...</div>
+            <div id="right-space">Right: Loading...</div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK scripts for Firebase integration -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+    <script>
+        // Firebase configuration object (Replace with your Firebase config)
+        var firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Initialize Firebase app instance
+        firebase.initializeApp(firebaseConfig);
+        var database = firebase.database();  // Reference to the Firebase Realtime Database
+
+        // References to database paths for parking data
+        var totalEmptySpaceRef = database.ref('/totalemptyspace');
+        var garageStatusRef = database.ref('/garage');
+
+        // Listen for updates on total empty spaces and update the webpage accordingly
+        totalEmptySpaceRef.on('value', (snapshot) => {
+            document.getElementById('total-spaces').innerText = 
+                'Total Available Spaces: ' + snapshot.val();  // Update total available space
+        });
+
+        // Listen for updates on garage space status and update each slot dynamically
+        garageStatusRef.on('value', (snapshot) => {
+            var garageStatus = snapshot.val();  // Get updated garage data
+
+            // Update each parking space slot based on availability
+            document.getElementById('left-space').innerText = 
+                'Left Parking Space: ' + (garageStatus.left ? 'Available' : 'Occupied');
+            document.getElementById('center1-space').innerText = 
+                'Center-1 Parking Space: ' + (garageStatus.center1 ? 'Available' : 'Occupied');
+            document.getElementById('center2-space').innerText = 
+                'Center-2 Parking Space: ' + (garageStatus.center2 ? 'Available' : 'Occupied');
+            document.getElementById('right-space').innerText = 
+                'Right Parking Space: ' + (garageStatus.right ? 'Available' : 'Occupied');
+
+            // Change slot colors based on availability
+            updateSpaceColor('left-space', garageStatus.left);
+            updateSpaceColor('center1-space', garageStatus.center1);
+            updateSpaceColor('center2-space', garageStatus.center2);
+            updateSpaceColor('right-space', garageStatus.right);
+        });
+
+        // Function to change color of slots based on availability
+        function updateSpaceColor(elementId, isAvailable) {
+            var element = document.getElementById(elementId);
+            if (isAvailable) {
+                element.classList.add('space');
+                element.classList.remove('occupied');
+                element.style.backgroundColor = '#e6ffe6';  // Light green for available
+            } else {
+                element.classList.remove('space');
+                element.classList.add('occupied');
+                element.style.backgroundColor = '#ffe6e6';  // Light red for occupied
+            }
+        }
+    </script>
+</body>
+</html>
