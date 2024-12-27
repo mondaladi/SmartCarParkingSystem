@@ -14,7 +14,7 @@ Designed to optimize the parking management system in garages and public parking
 | **IR Sensor-2 (Center1)** | D2                 | Signal pin to D2, VCC to 3.3V, GND to GND.                                    |
 | **IR Sensor-3 (Center2)** | D3                 | Signal pin to D3, VCC to 3.3V, GND to GND.                                    |
 | **IR Sensor-4 (Right)**   | D4                 | Signal pin to D4, VCC to 3.3V, GND to GND.                                    |
-| **Entry Sensor (IR)**     | D0                 | Signal pin to D0, VCC to 3.3V, GND to GND.                                    |
+| **Entry IR Sensor**       | D0                 | Signal pin to D0, VCC to 3.3V, GND to GND.                                    |
 | **Servo Motor**           | D8                 | Control pin to D8, VCC and GND to an external 5V power source and GND.        |
 | **LED-1 (Top-Left)**      | D6                 | Positive terminal to D6 via a 220Ω resistor, negative terminal to GND.        |
 | **LED-2 (Top-Right)**     | D7                 | Positive terminal to D7 via a 220Ω resistor, negative terminal to GND.        |
