@@ -1,2 +1,2 @@
 # SmartCarParkingSystem
-IoT-based Smart Parking System using NodeMCU and Firebase Realtime Database
+IoT-based Smart Car Parking System using NodeMCU and Firebase Realtime Database
