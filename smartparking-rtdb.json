@@ -1,0 +1,9 @@
+{
+  "garage": {
+    "center1": true,
+    "center2": true,
+    "left": true,
+    "right": true
+  },
+  "totalemptyspace": 4
+}
